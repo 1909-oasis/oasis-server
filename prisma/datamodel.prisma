@@ -1,0 +1,45 @@
+type User {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  password: String!
+  email: String! @unique
+  createdAt: DateTime! @createdAt
+  votes: [UserCocktail!]!
+}
+
+type UserCocktail {
+  id: ID! @id
+  user: User!
+  cocktail: Cocktail!
+  rating: Int!
+  recommended: Boolean!
+  createdAt: DateTime! @createdAt
+}
+
+type Cocktail {
+  id: ID! @id
+  name: String!
+  alcoholic: Boolean!
+  imageUrl: String!
+  starterPack: Boolean!
+  totalRating: Int! @default(value: 0)
+  totalVotes: Int! @default(value: 0)
+  recommendedCount: Int! @default(value: 0)
+  ingredients: [CocktailIngredient!]!
+  createdAt: DateTime! @createdAt
+}
+
+type CocktailIngredient {
+  id: ID! @id
+  measure: String!
+  cocktail: Cocktail!
+  ingredient: Ingredient!
+  createdAt: DateTime! @createdAt
+}
+
+type Ingredient {
+  id: ID! @id
+  name: String!
+  createdAt: DateTime! @createdAt
+}
