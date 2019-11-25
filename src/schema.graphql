@@ -1,0 +1,58 @@
+type Query {
+  info: String!
+}
+
+type Mutation {
+  signup(
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+  ): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  votes: [UserCocktail!]!
+}
+
+type UserCocktail {
+  id: ID!
+  user: User!
+  cocktail: Cocktail!
+  rating: Int!
+  recommended: Boolean!
+}
+
+type Cocktail {
+  id: ID!
+  name: String!
+  alcoholic: Boolean!
+  imageUrl: String!
+  starterPack: Boolean!
+  totalRating: Int!
+  totalVotes: Int!
+  recommendedCount: Int!
+  ingredients: [CocktailIngredient!]!
+}
+
+type CocktailIngredient {
+  id: ID!
+  measure: String!
+  cocktail: Cocktail!
+  ingredient: Ingredient!
+}
+
+type Ingredient {
+  id: ID!
+  name: String!
+}
