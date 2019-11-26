@@ -2,7 +2,8 @@
 #endpoint: ''
 #endpoint: ''
 #endpoint: ''
-endpoint: https://oasis-1909-804e350939.herokuapp.com/oasis-1909-v2/dev
+#endpoint: ''
+endpoint: https://oasis-1909-804e350939.herokuapp.com/oasis-server-v3/dev
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
 # Specifies language & location for the generated Prisma client
