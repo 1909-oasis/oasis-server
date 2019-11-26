@@ -7,27 +7,11 @@ var models = [
   {
     name: "User",
     embedded: false
-  },
-  {
-    name: "UserCocktail",
-    embedded: false
-  },
-  {
-    name: "Cocktail",
-    embedded: false
-  },
-  {
-    name: "CocktailIngredient",
-    embedded: false
-  },
-  {
-    name: "Ingredient",
-    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://oasis-1909-804e350939.herokuapp.com/oasis-server-v3/dev`
+  endpoint: `https://oasis-1909-804e350939.herokuapp.com/oasis-1909-v2/dev`
 });
 exports.prisma = new exports.Prisma();

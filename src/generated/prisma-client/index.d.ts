@@ -273,6 +273,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
 export type CocktailIngredientOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -333,7 +335,271 @@ export type UserOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export interface CocktailUpdateOneRequiredInput {
+  create?: Maybe<CocktailCreateInput>;
+  update?: Maybe<CocktailUpdateDataInput>;
+  upsert?: Maybe<CocktailUpsertNestedInput>;
+  connect?: Maybe<CocktailWhereUniqueInput>;
+}
+
+export type CocktailWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface IngredientCreateOneInput {
+  create?: Maybe<IngredientCreateInput>;
+  connect?: Maybe<IngredientWhereUniqueInput>;
+}
+
+export interface IngredientWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
+  OR?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
+  NOT?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
+}
+
+export interface IngredientCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface CocktailSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CocktailWhereInput>;
+  AND?: Maybe<
+    CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput
+  >;
+  OR?: Maybe<CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput>;
+  NOT?: Maybe<
+    CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput
+  >;
+}
+
+export interface CocktailUpdateInput {
+  name?: Maybe<String>;
+  alcoholic?: Maybe<Boolean>;
+  imageUrl?: Maybe<String>;
+  starterPack?: Maybe<Boolean>;
+  totalRating?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
+  ingredients?: Maybe<CocktailIngredientUpdateManyWithoutCocktailInput>;
+}
+
+export interface CocktailIngredientWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  measure?: Maybe<String>;
+  measure_not?: Maybe<String>;
+  measure_in?: Maybe<String[] | String>;
+  measure_not_in?: Maybe<String[] | String>;
+  measure_lt?: Maybe<String>;
+  measure_lte?: Maybe<String>;
+  measure_gt?: Maybe<String>;
+  measure_gte?: Maybe<String>;
+  measure_contains?: Maybe<String>;
+  measure_not_contains?: Maybe<String>;
+  measure_starts_with?: Maybe<String>;
+  measure_not_starts_with?: Maybe<String>;
+  measure_ends_with?: Maybe<String>;
+  measure_not_ends_with?: Maybe<String>;
+  cocktail?: Maybe<CocktailWhereInput>;
+  ingredient?: Maybe<IngredientWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
+  OR?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
+  NOT?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
+}
+
+export interface CocktailIngredientUpdateManyWithoutCocktailInput {
+  create?: Maybe<
+    | CocktailIngredientCreateWithoutCocktailInput[]
+    | CocktailIngredientCreateWithoutCocktailInput
+  >;
+  delete?: Maybe<
+    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
+  >;
+  connect?: Maybe<
+    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
+  >;
+  set?: Maybe<
+    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
+  >;
+  update?: Maybe<
+    | CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput[]
+    | CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput
+  >;
+  upsert?: Maybe<
+    | CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput[]
+    | CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput
+  >;
+  deleteMany?: Maybe<
+    CocktailIngredientScalarWhereInput[] | CocktailIngredientScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | CocktailIngredientUpdateManyWithWhereNestedInput[]
+    | CocktailIngredientUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithoutVotesDataInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  queue?: Maybe<CocktailUpdateManyInput>;
+}
+
+export interface CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput {
+  where: CocktailIngredientWhereUniqueInput;
+  data: CocktailIngredientUpdateWithoutCocktailDataInput;
+}
+
+export interface UserCocktailUpdateInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
+  cocktail?: Maybe<CocktailUpdateOneRequiredInput>;
+  rating?: Maybe<Int>;
+  recommended?: Maybe<Boolean>;
+}
+
+export interface CocktailIngredientUpdateWithoutCocktailDataInput {
+  measure?: Maybe<String>;
+  ingredient?: Maybe<IngredientUpdateOneRequiredInput>;
+}
+
+export interface UserCreateWithoutVotesInput {
+  id?: Maybe<ID_Input>;
+  firstName: String;
+  lastName: String;
+  password: String;
+  email: String;
+  queue?: Maybe<CocktailCreateManyInput>;
+}
+
+export interface IngredientUpdateOneRequiredInput {
+  create?: Maybe<IngredientCreateInput>;
+  update?: Maybe<IngredientUpdateDataInput>;
+  upsert?: Maybe<IngredientUpsertNestedInput>;
+  connect?: Maybe<IngredientWhereUniqueInput>;
+}
+
+export interface UserCocktailCreateInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutVotesInput;
+  cocktail: CocktailCreateOneInput;
+  rating: Int;
+  recommended: Boolean;
+}
+
+export interface IngredientUpdateDataInput {
+  name?: Maybe<String>;
+}
+
+export interface CocktailIngredientSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CocktailIngredientWhereInput>;
+  AND?: Maybe<
+    | CocktailIngredientSubscriptionWhereInput[]
+    | CocktailIngredientSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | CocktailIngredientSubscriptionWhereInput[]
+    | CocktailIngredientSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | CocktailIngredientSubscriptionWhereInput[]
+    | CocktailIngredientSubscriptionWhereInput
+  >;
+}
+
+export interface IngredientUpsertNestedInput {
+  update: IngredientUpdateDataInput;
+  create: IngredientCreateInput;
+}
+
+export interface CocktailUpdateManyDataInput {
+  name?: Maybe<String>;
+  alcoholic?: Maybe<Boolean>;
+  imageUrl?: Maybe<String>;
+  starterPack?: Maybe<Boolean>;
+  totalRating?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
+}
+
+export interface CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput {
+  where: CocktailIngredientWhereUniqueInput;
+  update: CocktailIngredientUpdateWithoutCocktailDataInput;
+  create: CocktailIngredientCreateWithoutCocktailInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface CocktailIngredientScalarWhereInput {
   id?: Maybe<ID_Input>;
@@ -383,234 +649,6 @@ export interface CocktailIngredientScalarWhereInput {
   >;
 }
 
-export type CocktailWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface CocktailCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  alcoholic: Boolean;
-  imageUrl: String;
-  starterPack: Boolean;
-  totalRating?: Maybe<Int>;
-  totalVotes?: Maybe<Int>;
-  recommendedCount?: Maybe<Int>;
-  ingredients?: Maybe<CocktailIngredientCreateManyWithoutCocktailInput>;
-}
-
-export interface CocktailCreateOneInput {
-  create?: Maybe<CocktailCreateInput>;
-  connect?: Maybe<CocktailWhereUniqueInput>;
-}
-
-export interface CocktailIngredientCreateManyWithoutCocktailInput {
-  create?: Maybe<
-    | CocktailIngredientCreateWithoutCocktailInput[]
-    | CocktailIngredientCreateWithoutCocktailInput
-  >;
-  connect?: Maybe<
-    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
-  >;
-}
-
-export interface UserCocktailSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserCocktailWhereInput>;
-  AND?: Maybe<
-    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
-  >;
-}
-
-export interface CocktailIngredientCreateWithoutCocktailInput {
-  id?: Maybe<ID_Input>;
-  measure: String;
-  ingredient: IngredientCreateOneInput;
-}
-
-export interface CocktailIngredientWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  measure?: Maybe<String>;
-  measure_not?: Maybe<String>;
-  measure_in?: Maybe<String[] | String>;
-  measure_not_in?: Maybe<String[] | String>;
-  measure_lt?: Maybe<String>;
-  measure_lte?: Maybe<String>;
-  measure_gt?: Maybe<String>;
-  measure_gte?: Maybe<String>;
-  measure_contains?: Maybe<String>;
-  measure_not_contains?: Maybe<String>;
-  measure_starts_with?: Maybe<String>;
-  measure_not_starts_with?: Maybe<String>;
-  measure_ends_with?: Maybe<String>;
-  measure_not_ends_with?: Maybe<String>;
-  cocktail?: Maybe<CocktailWhereInput>;
-  ingredient?: Maybe<IngredientWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
-  OR?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
-  NOT?: Maybe<CocktailIngredientWhereInput[] | CocktailIngredientWhereInput>;
-}
-
-export interface IngredientCreateOneInput {
-  create?: Maybe<IngredientCreateInput>;
-  connect?: Maybe<IngredientWhereUniqueInput>;
-}
-
-export interface CocktailIngredientSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CocktailIngredientWhereInput>;
-  AND?: Maybe<
-    | CocktailIngredientSubscriptionWhereInput[]
-    | CocktailIngredientSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    | CocktailIngredientSubscriptionWhereInput[]
-    | CocktailIngredientSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    | CocktailIngredientSubscriptionWhereInput[]
-    | CocktailIngredientSubscriptionWhereInput
-  >;
-}
-
-export interface IngredientCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface UserCocktailUpdateManyMutationInput {
-  rating?: Maybe<Int>;
-  recommended?: Maybe<Boolean>;
-}
-
-export interface CocktailUpdateInput {
-  name?: Maybe<String>;
-  alcoholic?: Maybe<Boolean>;
-  imageUrl?: Maybe<String>;
-  starterPack?: Maybe<Boolean>;
-  totalRating?: Maybe<Int>;
-  totalVotes?: Maybe<Int>;
-  recommendedCount?: Maybe<Int>;
-  ingredients?: Maybe<CocktailIngredientUpdateManyWithoutCocktailInput>;
-}
-
-export interface UserUpsertWithoutVotesInput {
-  update: UserUpdateWithoutVotesDataInput;
-  create: UserCreateWithoutVotesInput;
-}
-
-export interface CocktailIngredientUpdateManyWithoutCocktailInput {
-  create?: Maybe<
-    | CocktailIngredientCreateWithoutCocktailInput[]
-    | CocktailIngredientCreateWithoutCocktailInput
-  >;
-  delete?: Maybe<
-    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
-  >;
-  connect?: Maybe<
-    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
-  >;
-  set?: Maybe<
-    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
-  >;
-  update?: Maybe<
-    | CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput[]
-    | CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput
-  >;
-  upsert?: Maybe<
-    | CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput[]
-    | CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput
-  >;
-  deleteMany?: Maybe<
-    CocktailIngredientScalarWhereInput[] | CocktailIngredientScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | CocktailIngredientUpdateManyWithWhereNestedInput[]
-    | CocktailIngredientUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateOneRequiredWithoutVotesInput {
-  create?: Maybe<UserCreateWithoutVotesInput>;
-  update?: Maybe<UserUpdateWithoutVotesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutVotesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CocktailIngredientUpdateWithWhereUniqueWithoutCocktailInput {
-  where: CocktailIngredientWhereUniqueInput;
-  data: CocktailIngredientUpdateWithoutCocktailDataInput;
-}
-
-export interface UserCocktailUpdateInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
-  cocktail?: Maybe<CocktailUpdateOneRequiredInput>;
-  rating?: Maybe<Int>;
-  recommended?: Maybe<Boolean>;
-}
-
-export interface CocktailIngredientUpdateWithoutCocktailDataInput {
-  measure?: Maybe<String>;
-  ingredient?: Maybe<IngredientUpdateOneRequiredInput>;
-}
-
-export interface UserCreateOneWithoutVotesInput {
-  create?: Maybe<UserCreateWithoutVotesInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface IngredientUpdateOneRequiredInput {
-  create?: Maybe<IngredientCreateInput>;
-  update?: Maybe<IngredientUpdateDataInput>;
-  upsert?: Maybe<IngredientUpsertNestedInput>;
-  connect?: Maybe<IngredientWhereUniqueInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface IngredientUpdateDataInput {
-  name?: Maybe<String>;
-}
-
 export interface UserCocktailWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -651,20 +689,92 @@ export interface UserCocktailWhereInput {
   NOT?: Maybe<UserCocktailWhereInput[] | UserCocktailWhereInput>;
 }
 
-export interface IngredientUpsertNestedInput {
-  update: IngredientUpdateDataInput;
-  create: IngredientCreateInput;
+export interface CocktailIngredientUpdateManyWithWhereNestedInput {
+  where: CocktailIngredientScalarWhereInput;
+  data: CocktailIngredientUpdateManyDataInput;
 }
 
-export interface UserCocktailUpdateManyDataInput {
-  rating?: Maybe<Int>;
-  recommended?: Maybe<Boolean>;
+export interface IngredientSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<IngredientWhereInput>;
+  AND?: Maybe<
+    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
+  >;
 }
 
-export interface CocktailIngredientUpsertWithWhereUniqueWithoutCocktailInput {
-  where: CocktailIngredientWhereUniqueInput;
-  update: CocktailIngredientUpdateWithoutCocktailDataInput;
-  create: CocktailIngredientCreateWithoutCocktailInput;
+export interface CocktailIngredientUpdateManyDataInput {
+  measure?: Maybe<String>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface CocktailUpdateManyMutationInput {
+  name?: Maybe<String>;
+  alcoholic?: Maybe<Boolean>;
+  imageUrl?: Maybe<String>;
+  starterPack?: Maybe<Boolean>;
+  totalRating?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
+}
+
+export interface CocktailUpdateManyInput {
+  create?: Maybe<CocktailCreateInput[] | CocktailCreateInput>;
+  update?: Maybe<
+    | CocktailUpdateWithWhereUniqueNestedInput[]
+    | CocktailUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | CocktailUpsertWithWhereUniqueNestedInput[]
+    | CocktailUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<CocktailWhereUniqueInput[] | CocktailWhereUniqueInput>;
+  connect?: Maybe<CocktailWhereUniqueInput[] | CocktailWhereUniqueInput>;
+  set?: Maybe<CocktailWhereUniqueInput[] | CocktailWhereUniqueInput>;
+  disconnect?: Maybe<CocktailWhereUniqueInput[] | CocktailWhereUniqueInput>;
+  deleteMany?: Maybe<CocktailScalarWhereInput[] | CocktailScalarWhereInput>;
+  updateMany?: Maybe<
+    | CocktailUpdateManyWithWhereNestedInput[]
+    | CocktailUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CocktailUpsertNestedInput {
+  update: CocktailUpdateDataInput;
+  create: CocktailCreateInput;
+}
+
+export type UserCocktailWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CocktailUpdateDataInput {
+  name?: Maybe<String>;
+  alcoholic?: Maybe<Boolean>;
+  imageUrl?: Maybe<String>;
+  starterPack?: Maybe<Boolean>;
+  totalRating?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
+  ingredients?: Maybe<CocktailIngredientUpdateManyWithoutCocktailInput>;
 }
 
 export interface UserCocktailScalarWhereInput {
@@ -705,57 +815,54 @@ export interface UserCocktailScalarWhereInput {
   NOT?: Maybe<UserCocktailScalarWhereInput[] | UserCocktailScalarWhereInput>;
 }
 
-export interface UserCocktailUpdateManyWithoutUserInput {
+export interface CocktailIngredientCreateInput {
+  id?: Maybe<ID_Input>;
+  measure: String;
+  cocktail: CocktailCreateOneWithoutIngredientsInput;
+  ingredient: IngredientCreateOneInput;
+}
+
+export interface UserCocktailSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserCocktailWhereInput>;
+  AND?: Maybe<
+    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    UserCocktailSubscriptionWhereInput[] | UserCocktailSubscriptionWhereInput
+  >;
+}
+
+export interface CocktailCreateOneWithoutIngredientsInput {
+  create?: Maybe<CocktailCreateWithoutIngredientsInput>;
+  connect?: Maybe<CocktailWhereUniqueInput>;
+}
+
+export interface CocktailIngredientCreateManyWithoutCocktailInput {
   create?: Maybe<
-    UserCocktailCreateWithoutUserInput[] | UserCocktailCreateWithoutUserInput
+    | CocktailIngredientCreateWithoutCocktailInput[]
+    | CocktailIngredientCreateWithoutCocktailInput
   >;
-  delete?: Maybe<UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput>;
   connect?: Maybe<
-    UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput
-  >;
-  set?: Maybe<UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput>;
-  disconnect?: Maybe<
-    UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput
-  >;
-  update?: Maybe<
-    | UserCocktailUpdateWithWhereUniqueWithoutUserInput[]
-    | UserCocktailUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | UserCocktailUpsertWithWhereUniqueWithoutUserInput[]
-    | UserCocktailUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<
-    UserCocktailScalarWhereInput[] | UserCocktailScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | UserCocktailUpdateManyWithWhereNestedInput[]
-    | UserCocktailUpdateManyWithWhereNestedInput
+    CocktailIngredientWhereUniqueInput[] | CocktailIngredientWhereUniqueInput
   >;
 }
 
-export interface CocktailUpsertNestedInput {
-  update: CocktailUpdateDataInput;
-  create: CocktailCreateInput;
-}
-
-export interface CocktailIngredientUpdateManyWithWhereNestedInput {
-  where: CocktailIngredientScalarWhereInput;
-  data: CocktailIngredientUpdateManyDataInput;
-}
-
-export type UserCocktailWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface CocktailIngredientUpdateManyDataInput {
-  measure?: Maybe<String>;
-}
-
-export interface UserCocktailUpdateWithoutUserDataInput {
-  cocktail?: Maybe<CocktailUpdateOneRequiredInput>;
-  rating?: Maybe<Int>;
-  recommended?: Maybe<Boolean>;
+export interface CocktailCreateWithoutIngredientsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  alcoholic: Boolean;
+  imageUrl: String;
+  starterPack: Boolean;
+  totalRating?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
 }
 
 export interface CocktailWhereInput {
@@ -845,56 +952,29 @@ export interface CocktailWhereInput {
   NOT?: Maybe<CocktailWhereInput[] | CocktailWhereInput>;
 }
 
-export interface UserCocktailCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  cocktail: CocktailCreateOneInput;
-  rating: Int;
-  recommended: Boolean;
+export interface CocktailIngredientUpdateInput {
+  measure?: Maybe<String>;
+  cocktail?: Maybe<CocktailUpdateOneRequiredWithoutIngredientsInput>;
+  ingredient?: Maybe<IngredientUpdateOneRequiredInput>;
 }
 
-export interface IngredientWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
-  OR?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
-  NOT?: Maybe<IngredientWhereInput[] | IngredientWhereInput>;
+export interface UserUpsertWithoutVotesInput {
+  update: UserUpdateWithoutVotesDataInput;
+  create: UserCreateWithoutVotesInput;
 }
 
-export interface CocktailUpdateManyMutationInput {
+export interface CocktailUpdateOneRequiredWithoutIngredientsInput {
+  create?: Maybe<CocktailCreateWithoutIngredientsInput>;
+  update?: Maybe<CocktailUpdateWithoutIngredientsDataInput>;
+  upsert?: Maybe<CocktailUpsertWithoutIngredientsInput>;
+  connect?: Maybe<CocktailWhereUniqueInput>;
+}
+
+export type CocktailIngredientWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CocktailUpdateWithoutIngredientsDataInput {
   name?: Maybe<String>;
   alcoholic?: Maybe<Boolean>;
   imageUrl?: Maybe<String>;
@@ -904,74 +984,23 @@ export interface CocktailUpdateManyMutationInput {
   recommendedCount?: Maybe<Int>;
 }
 
-export interface UserUpdateInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  votes?: Maybe<UserCocktailUpdateManyWithoutUserInput>;
-}
-
-export interface IngredientSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IngredientWhereInput>;
-  AND?: Maybe<
-    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput
-  >;
-}
-
-export interface CocktailIngredientCreateInput {
-  id?: Maybe<ID_Input>;
-  measure: String;
-  cocktail: CocktailCreateOneWithoutIngredientsInput;
-  ingredient: IngredientCreateOneInput;
-}
-
-export type CocktailIngredientWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface CocktailCreateOneWithoutIngredientsInput {
-  create?: Maybe<CocktailCreateWithoutIngredientsInput>;
-  connect?: Maybe<CocktailWhereUniqueInput>;
-}
-
 export type IngredientWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  name?: Maybe<String>;
 }>;
 
-export interface CocktailCreateWithoutIngredientsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  alcoholic: Boolean;
-  imageUrl: String;
-  starterPack: Boolean;
-  totalRating?: Maybe<Int>;
-  totalVotes?: Maybe<Int>;
-  recommendedCount?: Maybe<Int>;
+export interface CocktailUpsertWithoutIngredientsInput {
+  update: CocktailUpdateWithoutIngredientsDataInput;
+  create: CocktailCreateWithoutIngredientsInput;
 }
 
-export interface UserCocktailCreateInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutVotesInput;
-  cocktail: CocktailCreateOneInput;
-  rating: Int;
-  recommended: Boolean;
+export interface CocktailUpdateManyWithWhereNestedInput {
+  where: CocktailScalarWhereInput;
+  data: CocktailUpdateManyDataInput;
 }
 
-export interface CocktailIngredientUpdateInput {
+export interface CocktailIngredientUpdateManyMutationInput {
   measure?: Maybe<String>;
-  cocktail?: Maybe<CocktailUpdateOneRequiredWithoutIngredientsInput>;
-  ingredient?: Maybe<IngredientUpdateOneRequiredInput>;
 }
 
 export interface UserWhereInput {
@@ -1056,73 +1085,52 @@ export interface UserWhereInput {
   votes_every?: Maybe<UserCocktailWhereInput>;
   votes_some?: Maybe<UserCocktailWhereInput>;
   votes_none?: Maybe<UserCocktailWhereInput>;
+  queue_every?: Maybe<CocktailWhereInput>;
+  queue_some?: Maybe<CocktailWhereInput>;
+  queue_none?: Maybe<CocktailWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface CocktailUpdateOneRequiredWithoutIngredientsInput {
-  create?: Maybe<CocktailCreateWithoutIngredientsInput>;
-  update?: Maybe<CocktailUpdateWithoutIngredientsDataInput>;
-  upsert?: Maybe<CocktailUpsertWithoutIngredientsInput>;
-  connect?: Maybe<CocktailWhereUniqueInput>;
-}
-
-export interface UserCocktailUpsertWithWhereUniqueWithoutUserInput {
-  where: UserCocktailWhereUniqueInput;
-  update: UserCocktailUpdateWithoutUserDataInput;
-  create: UserCocktailCreateWithoutUserInput;
-}
-
-export interface CocktailUpdateWithoutIngredientsDataInput {
+export interface IngredientUpdateInput {
   name?: Maybe<String>;
-  alcoholic?: Maybe<Boolean>;
-  imageUrl?: Maybe<String>;
-  starterPack?: Maybe<Boolean>;
+}
+
+export interface CocktailUpdateWithWhereUniqueNestedInput {
+  where: CocktailWhereUniqueInput;
+  data: CocktailUpdateDataInput;
+}
+
+export interface IngredientUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface UserCocktailUpdateManyWithWhereNestedInput {
+  where: UserCocktailScalarWhereInput;
+  data: UserCocktailUpdateManyDataInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  firstName: String;
+  lastName: String;
+  password: String;
+  email: String;
+  votes?: Maybe<UserCocktailCreateManyWithoutUserInput>;
+  queue?: Maybe<CocktailCreateManyInput>;
+}
+
+export interface CocktailCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  alcoholic: Boolean;
+  imageUrl: String;
+  starterPack: Boolean;
   totalRating?: Maybe<Int>;
   totalVotes?: Maybe<Int>;
   recommendedCount?: Maybe<Int>;
-}
-
-export interface CocktailUpdateOneRequiredInput {
-  create?: Maybe<CocktailCreateInput>;
-  update?: Maybe<CocktailUpdateDataInput>;
-  upsert?: Maybe<CocktailUpsertNestedInput>;
-  connect?: Maybe<CocktailWhereUniqueInput>;
-}
-
-export interface CocktailUpsertWithoutIngredientsInput {
-  update: CocktailUpdateWithoutIngredientsDataInput;
-  create: CocktailCreateWithoutIngredientsInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface CocktailIngredientUpdateManyMutationInput {
-  measure?: Maybe<String>;
-}
-
-export interface UserUpdateWithoutVotesDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-}
-
-export interface UserUpdateManyMutationInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
+  ingredients?: Maybe<CocktailIngredientCreateManyWithoutCocktailInput>;
 }
 
 export interface UserCocktailCreateManyWithoutUserInput {
@@ -1134,49 +1142,126 @@ export interface UserCocktailCreateManyWithoutUserInput {
   >;
 }
 
-export interface UserCreateInput {
+export interface UserCocktailUpdateManyMutationInput {
+  rating?: Maybe<Int>;
+  recommended?: Maybe<Boolean>;
+}
+
+export interface UserCocktailCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  firstName: String;
-  lastName: String;
-  password: String;
-  email: String;
-  votes?: Maybe<UserCocktailCreateManyWithoutUserInput>;
+  cocktail: CocktailCreateOneInput;
+  rating: Int;
+  recommended: Boolean;
 }
 
-export interface IngredientUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface UserCreateOneWithoutVotesInput {
+  create?: Maybe<UserCreateWithoutVotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface IngredientUpdateInput {
-  name?: Maybe<String>;
+export interface CocktailCreateOneInput {
+  create?: Maybe<CocktailCreateInput>;
+  connect?: Maybe<CocktailWhereUniqueInput>;
 }
 
-export interface UserCocktailUpdateManyWithWhereNestedInput {
-  where: UserCocktailScalarWhereInput;
-  data: UserCocktailUpdateManyDataInput;
-}
-
-export interface UserCreateWithoutVotesInput {
+export interface CocktailScalarWhereInput {
   id?: Maybe<ID_Input>;
-  firstName: String;
-  lastName: String;
-  password: String;
-  email: String;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  alcoholic?: Maybe<Boolean>;
+  alcoholic_not?: Maybe<Boolean>;
+  imageUrl?: Maybe<String>;
+  imageUrl_not?: Maybe<String>;
+  imageUrl_in?: Maybe<String[] | String>;
+  imageUrl_not_in?: Maybe<String[] | String>;
+  imageUrl_lt?: Maybe<String>;
+  imageUrl_lte?: Maybe<String>;
+  imageUrl_gt?: Maybe<String>;
+  imageUrl_gte?: Maybe<String>;
+  imageUrl_contains?: Maybe<String>;
+  imageUrl_not_contains?: Maybe<String>;
+  imageUrl_starts_with?: Maybe<String>;
+  imageUrl_not_starts_with?: Maybe<String>;
+  imageUrl_ends_with?: Maybe<String>;
+  imageUrl_not_ends_with?: Maybe<String>;
+  starterPack?: Maybe<Boolean>;
+  starterPack_not?: Maybe<Boolean>;
+  totalRating?: Maybe<Int>;
+  totalRating_not?: Maybe<Int>;
+  totalRating_in?: Maybe<Int[] | Int>;
+  totalRating_not_in?: Maybe<Int[] | Int>;
+  totalRating_lt?: Maybe<Int>;
+  totalRating_lte?: Maybe<Int>;
+  totalRating_gt?: Maybe<Int>;
+  totalRating_gte?: Maybe<Int>;
+  totalVotes?: Maybe<Int>;
+  totalVotes_not?: Maybe<Int>;
+  totalVotes_in?: Maybe<Int[] | Int>;
+  totalVotes_not_in?: Maybe<Int[] | Int>;
+  totalVotes_lt?: Maybe<Int>;
+  totalVotes_lte?: Maybe<Int>;
+  totalVotes_gt?: Maybe<Int>;
+  totalVotes_gte?: Maybe<Int>;
+  recommendedCount?: Maybe<Int>;
+  recommendedCount_not?: Maybe<Int>;
+  recommendedCount_in?: Maybe<Int[] | Int>;
+  recommendedCount_not_in?: Maybe<Int[] | Int>;
+  recommendedCount_lt?: Maybe<Int>;
+  recommendedCount_lte?: Maybe<Int>;
+  recommendedCount_gt?: Maybe<Int>;
+  recommendedCount_gte?: Maybe<Int>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<CocktailScalarWhereInput[] | CocktailScalarWhereInput>;
+  OR?: Maybe<CocktailScalarWhereInput[] | CocktailScalarWhereInput>;
+  NOT?: Maybe<CocktailScalarWhereInput[] | CocktailScalarWhereInput>;
 }
 
-export interface CocktailSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CocktailWhereInput>;
-  AND?: Maybe<
-    CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput
-  >;
-  OR?: Maybe<CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput>;
-  NOT?: Maybe<
-    CocktailSubscriptionWhereInput[] | CocktailSubscriptionWhereInput
-  >;
+export interface CocktailCreateManyInput {
+  create?: Maybe<CocktailCreateInput[] | CocktailCreateInput>;
+  connect?: Maybe<CocktailWhereUniqueInput[] | CocktailWhereUniqueInput>;
+}
+
+export interface UserCocktailUpdateManyDataInput {
+  rating?: Maybe<Int>;
+  recommended?: Maybe<Boolean>;
+}
+
+export interface UserCocktailUpdateWithoutUserDataInput {
+  cocktail?: Maybe<CocktailUpdateOneRequiredInput>;
+  rating?: Maybe<Int>;
+  recommended?: Maybe<Boolean>;
 }
 
 export interface UserCocktailUpdateWithWhereUniqueWithoutUserInput {
@@ -1184,15 +1269,74 @@ export interface UserCocktailUpdateWithWhereUniqueWithoutUserInput {
   data: UserCocktailUpdateWithoutUserDataInput;
 }
 
-export interface CocktailUpdateDataInput {
-  name?: Maybe<String>;
-  alcoholic?: Maybe<Boolean>;
-  imageUrl?: Maybe<String>;
-  starterPack?: Maybe<Boolean>;
-  totalRating?: Maybe<Int>;
-  totalVotes?: Maybe<Int>;
-  recommendedCount?: Maybe<Int>;
-  ingredients?: Maybe<CocktailIngredientUpdateManyWithoutCocktailInput>;
+export interface UserCocktailUpdateManyWithoutUserInput {
+  create?: Maybe<
+    UserCocktailCreateWithoutUserInput[] | UserCocktailCreateWithoutUserInput
+  >;
+  delete?: Maybe<UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput>;
+  connect?: Maybe<
+    UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput
+  >;
+  set?: Maybe<UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput>;
+  disconnect?: Maybe<
+    UserCocktailWhereUniqueInput[] | UserCocktailWhereUniqueInput
+  >;
+  update?: Maybe<
+    | UserCocktailUpdateWithWhereUniqueWithoutUserInput[]
+    | UserCocktailUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | UserCocktailUpsertWithWhereUniqueWithoutUserInput[]
+    | UserCocktailUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    UserCocktailScalarWhereInput[] | UserCocktailScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | UserCocktailUpdateManyWithWhereNestedInput[]
+    | UserCocktailUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  votes?: Maybe<UserCocktailUpdateManyWithoutUserInput>;
+  queue?: Maybe<CocktailUpdateManyInput>;
+}
+
+export interface UserCocktailUpsertWithWhereUniqueWithoutUserInput {
+  where: UserCocktailWhereUniqueInput;
+  update: UserCocktailUpdateWithoutUserDataInput;
+  create: UserCocktailCreateWithoutUserInput;
+}
+
+export interface CocktailUpsertWithWhereUniqueNestedInput {
+  where: CocktailWhereUniqueInput;
+  update: CocktailUpdateDataInput;
+  create: CocktailCreateInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredWithoutVotesInput {
+  create?: Maybe<UserCreateWithoutVotesInput>;
+  update?: Maybe<UserUpdateWithoutVotesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutVotesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface CocktailIngredientCreateWithoutCocktailInput {
+  id?: Maybe<ID_Input>;
+  measure: String;
+  ingredient: IngredientCreateOneInput;
 }
 
 export interface NodeNode {
@@ -1213,6 +1357,29 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserCocktailPreviousValues {
@@ -1240,18 +1407,39 @@ export interface UserCocktailPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateCocktailIngredient {
+export interface CocktailConnection {
+  pageInfo: PageInfo;
+  edges: CocktailEdge[];
+}
+
+export interface CocktailConnectionPromise
+  extends Promise<CocktailConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CocktailEdge>>() => T;
+  aggregate: <T = AggregateCocktailPromise>() => T;
+}
+
+export interface CocktailConnectionSubscription
+  extends Promise<AsyncIterator<CocktailConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CocktailEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCocktailSubscription>() => T;
+}
+
+export interface AggregateUserCocktail {
   count: Int;
 }
 
-export interface AggregateCocktailIngredientPromise
-  extends Promise<AggregateCocktailIngredient>,
+export interface AggregateUserCocktailPromise
+  extends Promise<AggregateUserCocktail>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCocktailIngredientSubscription
-  extends Promise<AsyncIterator<AggregateCocktailIngredient>>,
+export interface AggregateUserCocktailSubscription
+  extends Promise<AsyncIterator<AggregateUserCocktail>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1284,46 +1472,94 @@ export interface IngredientNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface CocktailIngredientEdge {
-  node: CocktailIngredient;
+export interface UserCocktailConnection {
+  pageInfo: PageInfo;
+  edges: UserCocktailEdge[];
+}
+
+export interface UserCocktailConnectionPromise
+  extends Promise<UserCocktailConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserCocktailEdge>>() => T;
+  aggregate: <T = AggregateUserCocktailPromise>() => T;
+}
+
+export interface UserCocktailConnectionSubscription
+  extends Promise<AsyncIterator<UserCocktailConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserCocktailEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserCocktailSubscription>() => T;
+}
+
+export interface CocktailIngredient {
+  id: ID_Output;
+  measure: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface CocktailIngredientPromise
+  extends Promise<CocktailIngredient>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  measure: () => Promise<String>;
+  cocktail: <T = CocktailPromise>() => T;
+  ingredient: <T = IngredientPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CocktailIngredientSubscription
+  extends Promise<AsyncIterator<CocktailIngredient>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  measure: () => Promise<AsyncIterator<String>>;
+  cocktail: <T = CocktailSubscription>() => T;
+  ingredient: <T = IngredientSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CocktailIngredientNullablePromise
+  extends Promise<CocktailIngredient | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  measure: () => Promise<String>;
+  cocktail: <T = CocktailPromise>() => T;
+  ingredient: <T = IngredientPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface UserEdge {
+  node: User;
   cursor: String;
 }
 
-export interface CocktailIngredientEdgePromise
-  extends Promise<CocktailIngredientEdge>,
-    Fragmentable {
-  node: <T = CocktailIngredientPromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface CocktailIngredientEdgeSubscription
-  extends Promise<AsyncIterator<CocktailIngredientEdge>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = CocktailIngredientSubscription>() => T;
+  node: <T = UserSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CocktailIngredientConnection {
-  pageInfo: PageInfo;
-  edges: CocktailIngredientEdge[];
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface CocktailIngredientConnectionPromise
-  extends Promise<CocktailIngredientConnection>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CocktailIngredientEdge>>() => T;
-  aggregate: <T = AggregateCocktailIngredientPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface CocktailIngredientConnectionSubscription
-  extends Promise<AsyncIterator<CocktailIngredientConnection>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <
-    T = Promise<AsyncIterator<CocktailIngredientEdgeSubscription>>
-  >() => T;
-  aggregate: <T = AggregateCocktailIngredientSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1351,76 +1587,6 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface UserCocktailEdge {
-  node: UserCocktail;
-  cursor: String;
-}
-
-export interface UserCocktailEdgePromise
-  extends Promise<UserCocktailEdge>,
-    Fragmentable {
-  node: <T = UserCocktailPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserCocktailEdgeSubscription
-  extends Promise<AsyncIterator<UserCocktailEdge>>,
-    Fragmentable {
-  node: <T = UserCocktailSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateCocktail {
-  count: Int;
-}
-
-export interface AggregateCocktailPromise
-  extends Promise<AggregateCocktail>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCocktailSubscription
-  extends Promise<AsyncIterator<AggregateCocktail>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CocktailEdge {
-  node: Cocktail;
-  cursor: String;
-}
-
-export interface CocktailEdgePromise
-  extends Promise<CocktailEdge>,
-    Fragmentable {
-  node: <T = CocktailPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CocktailEdgeSubscription
-  extends Promise<AsyncIterator<CocktailEdge>>,
-    Fragmentable {
-  node: <T = CocktailSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface UserConnection {
   pageInfo: PageInfo;
   edges: UserEdge[];
@@ -1440,6 +1606,263 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface UserCocktail {
+  id: ID_Output;
+  rating: Int;
+  recommended: Boolean;
+  createdAt: DateTimeOutput;
+}
+
+export interface UserCocktailPromise
+  extends Promise<UserCocktail>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  cocktail: <T = CocktailPromise>() => T;
+  rating: () => Promise<Int>;
+  recommended: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface UserCocktailSubscription
+  extends Promise<AsyncIterator<UserCocktail>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  cocktail: <T = CocktailSubscription>() => T;
+  rating: () => Promise<AsyncIterator<Int>>;
+  recommended: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface UserCocktailNullablePromise
+  extends Promise<UserCocktail | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  cocktail: <T = CocktailPromise>() => T;
+  rating: () => Promise<Int>;
+  recommended: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface User {
+  id: ID_Output;
+  firstName: String;
+  lastName: String;
+  password: String;
+  email: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  votes: <T = FragmentableArray<UserCocktail>>(args?: {
+    where?: UserCocktailWhereInput;
+    orderBy?: UserCocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  queue: <T = FragmentableArray<Cocktail>>(args?: {
+    where?: CocktailWhereInput;
+    orderBy?: CocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  votes: <T = Promise<AsyncIterator<UserCocktailSubscription>>>(args?: {
+    where?: UserCocktailWhereInput;
+    orderBy?: UserCocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  queue: <T = Promise<AsyncIterator<CocktailSubscription>>>(args?: {
+    where?: CocktailWhereInput;
+    orderBy?: CocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  votes: <T = FragmentableArray<UserCocktail>>(args?: {
+    where?: UserCocktailWhereInput;
+    orderBy?: UserCocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  queue: <T = FragmentableArray<Cocktail>>(args?: {
+    where?: CocktailWhereInput;
+    orderBy?: CocktailOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface IngredientEdge {
+  node: Ingredient;
+  cursor: String;
+}
+
+export interface IngredientEdgePromise
+  extends Promise<IngredientEdge>,
+    Fragmentable {
+  node: <T = IngredientPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface IngredientEdgeSubscription
+  extends Promise<AsyncIterator<IngredientEdge>>,
+    Fragmentable {
+  node: <T = IngredientSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CocktailSubscriptionPayload {
+  mutation: MutationType;
+  node: Cocktail;
+  updatedFields: String[];
+  previousValues: CocktailPreviousValues;
+}
+
+export interface CocktailSubscriptionPayloadPromise
+  extends Promise<CocktailSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CocktailPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CocktailPreviousValuesPromise>() => T;
+}
+
+export interface CocktailSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CocktailSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CocktailSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CocktailPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCocktailIngredient {
+  count: Int;
+}
+
+export interface AggregateCocktailIngredientPromise
+  extends Promise<AggregateCocktailIngredient>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCocktailIngredientSubscription
+  extends Promise<AsyncIterator<AggregateCocktailIngredient>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CocktailPreviousValues {
+  id: ID_Output;
+  name: String;
+  alcoholic: Boolean;
+  imageUrl: String;
+  starterPack: Boolean;
+  totalRating: Int;
+  totalVotes: Int;
+  recommendedCount: Int;
+  createdAt: DateTimeOutput;
+}
+
+export interface CocktailPreviousValuesPromise
+  extends Promise<CocktailPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  alcoholic: () => Promise<Boolean>;
+  imageUrl: () => Promise<String>;
+  starterPack: () => Promise<Boolean>;
+  totalRating: () => Promise<Int>;
+  totalVotes: () => Promise<Int>;
+  recommendedCount: () => Promise<Int>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface CocktailPreviousValuesSubscription
+  extends Promise<AsyncIterator<CocktailPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  alcoholic: () => Promise<AsyncIterator<Boolean>>;
+  imageUrl: () => Promise<AsyncIterator<String>>;
+  starterPack: () => Promise<AsyncIterator<Boolean>>;
+  totalRating: () => Promise<AsyncIterator<Int>>;
+  totalVotes: () => Promise<AsyncIterator<Int>>;
+  recommendedCount: () => Promise<AsyncIterator<Int>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface CocktailIngredientConnection {
+  pageInfo: PageInfo;
+  edges: CocktailIngredientEdge[];
+}
+
+export interface CocktailIngredientConnectionPromise
+  extends Promise<CocktailIngredientConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CocktailIngredientEdge>>() => T;
+  aggregate: <T = AggregateCocktailIngredientPromise>() => T;
+}
+
+export interface CocktailIngredientConnectionSubscription
+  extends Promise<AsyncIterator<CocktailIngredientConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<CocktailIngredientEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateCocktailIngredientSubscription>() => T;
 }
 
 export interface Cocktail {
@@ -1523,249 +1946,23 @@ export interface CocktailNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface UserCocktail {
-  id: ID_Output;
-  rating: Int;
-  recommended: Boolean;
-  createdAt: DateTimeOutput;
-}
-
-export interface UserCocktailPromise
-  extends Promise<UserCocktail>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  cocktail: <T = CocktailPromise>() => T;
-  rating: () => Promise<Int>;
-  recommended: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserCocktailSubscription
-  extends Promise<AsyncIterator<UserCocktail>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  user: <T = UserSubscription>() => T;
-  cocktail: <T = CocktailSubscription>() => T;
-  rating: () => Promise<AsyncIterator<Int>>;
-  recommended: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface UserCocktailNullablePromise
-  extends Promise<UserCocktail | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  cocktail: <T = CocktailPromise>() => T;
-  rating: () => Promise<Int>;
-  recommended: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CocktailSubscriptionPayload {
-  mutation: MutationType;
+export interface CocktailEdge {
   node: Cocktail;
-  updatedFields: String[];
-  previousValues: CocktailPreviousValues;
-}
-
-export interface CocktailSubscriptionPayloadPromise
-  extends Promise<CocktailSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CocktailPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CocktailPreviousValuesPromise>() => T;
-}
-
-export interface CocktailSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CocktailSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CocktailSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CocktailPreviousValuesSubscription>() => T;
-}
-
-export interface User {
-  id: ID_Output;
-  firstName: String;
-  lastName: String;
-  password: String;
-  email: String;
-  createdAt: DateTimeOutput;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  votes: <T = FragmentableArray<UserCocktail>>(args?: {
-    where?: UserCocktailWhereInput;
-    orderBy?: UserCocktailOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  votes: <T = Promise<AsyncIterator<UserCocktailSubscription>>>(args?: {
-    where?: UserCocktailWhereInput;
-    orderBy?: UserCocktailOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  votes: <T = FragmentableArray<UserCocktail>>(args?: {
-    where?: UserCocktailWhereInput;
-    orderBy?: UserCocktailOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface CocktailPreviousValues {
-  id: ID_Output;
-  name: String;
-  alcoholic: Boolean;
-  imageUrl: String;
-  starterPack: Boolean;
-  totalRating: Int;
-  totalVotes: Int;
-  recommendedCount: Int;
-  createdAt: DateTimeOutput;
-}
-
-export interface CocktailPreviousValuesPromise
-  extends Promise<CocktailPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  alcoholic: () => Promise<Boolean>;
-  imageUrl: () => Promise<String>;
-  starterPack: () => Promise<Boolean>;
-  totalRating: () => Promise<Int>;
-  totalVotes: () => Promise<Int>;
-  recommendedCount: () => Promise<Int>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CocktailPreviousValuesSubscription
-  extends Promise<AsyncIterator<CocktailPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  alcoholic: () => Promise<AsyncIterator<Boolean>>;
-  imageUrl: () => Promise<AsyncIterator<String>>;
-  starterPack: () => Promise<AsyncIterator<Boolean>>;
-  totalRating: () => Promise<AsyncIterator<Int>>;
-  totalVotes: () => Promise<AsyncIterator<Int>>;
-  recommendedCount: () => Promise<AsyncIterator<Int>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface IngredientEdge {
-  node: Ingredient;
   cursor: String;
 }
 
-export interface IngredientEdgePromise
-  extends Promise<IngredientEdge>,
+export interface CocktailEdgePromise
+  extends Promise<CocktailEdge>,
     Fragmentable {
-  node: <T = IngredientPromise>() => T;
+  node: <T = CocktailPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface IngredientEdgeSubscription
-  extends Promise<AsyncIterator<IngredientEdge>>,
+export interface CocktailEdgeSubscription
+  extends Promise<AsyncIterator<CocktailEdge>>,
     Fragmentable {
-  node: <T = IngredientSubscription>() => T;
+  node: <T = CocktailSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  firstName: String;
-  lastName: String;
-  password: String;
-  email: String;
-  createdAt: DateTimeOutput;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface CocktailIngredientSubscriptionPayload {
@@ -1793,50 +1990,44 @@ export interface CocktailIngredientSubscriptionPayloadSubscription
   previousValues: <T = CocktailIngredientPreviousValuesSubscription>() => T;
 }
 
-export interface UserCocktailConnection {
-  pageInfo: PageInfo;
-  edges: UserCocktailEdge[];
+export interface UserCocktailEdge {
+  node: UserCocktail;
+  cursor: String;
 }
 
-export interface UserCocktailConnectionPromise
-  extends Promise<UserCocktailConnection>,
+export interface UserCocktailEdgePromise
+  extends Promise<UserCocktailEdge>,
+    Fragmentable {
+  node: <T = UserCocktailPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserCocktailEdgeSubscription
+  extends Promise<AsyncIterator<UserCocktailEdge>>,
+    Fragmentable {
+  node: <T = UserCocktailSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface IngredientConnection {
+  pageInfo: PageInfo;
+  edges: IngredientEdge[];
+}
+
+export interface IngredientConnectionPromise
+  extends Promise<IngredientConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserCocktailEdge>>() => T;
-  aggregate: <T = AggregateUserCocktailPromise>() => T;
+  edges: <T = FragmentableArray<IngredientEdge>>() => T;
+  aggregate: <T = AggregateIngredientPromise>() => T;
 }
 
-export interface UserCocktailConnectionSubscription
-  extends Promise<AsyncIterator<UserCocktailConnection>>,
+export interface IngredientConnectionSubscription
+  extends Promise<AsyncIterator<IngredientConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserCocktailEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserCocktailSubscription>() => T;
-}
-
-export interface UserCocktailSubscriptionPayload {
-  mutation: MutationType;
-  node: UserCocktail;
-  updatedFields: String[];
-  previousValues: UserCocktailPreviousValues;
-}
-
-export interface UserCocktailSubscriptionPayloadPromise
-  extends Promise<UserCocktailSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserCocktailPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserCocktailPreviousValuesPromise>() => T;
-}
-
-export interface UserCocktailSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserCocktailSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserCocktailSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserCocktailPreviousValuesSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IngredientEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIngredientSubscription>() => T;
 }
 
 export interface IngredientPreviousValues {
@@ -1886,25 +2077,35 @@ export interface IngredientSubscriptionPayloadSubscription
   previousValues: <T = IngredientPreviousValuesSubscription>() => T;
 }
 
-export interface CocktailConnection {
-  pageInfo: PageInfo;
-  edges: CocktailEdge[];
+export interface UserPreviousValues {
+  id: ID_Output;
+  firstName: String;
+  lastName: String;
+  password: String;
+  email: String;
+  createdAt: DateTimeOutput;
 }
 
-export interface CocktailConnectionPromise
-  extends Promise<CocktailConnection>,
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CocktailEdge>>() => T;
-  aggregate: <T = AggregateCocktailPromise>() => T;
+  id: () => Promise<ID_Output>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface CocktailConnectionSubscription
-  extends Promise<AsyncIterator<CocktailConnection>>,
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CocktailEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCocktailSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface CocktailIngredientPreviousValues {
@@ -1929,94 +2130,23 @@ export interface CocktailIngredientPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface CocktailIngredient {
-  id: ID_Output;
-  measure: String;
-  createdAt: DateTimeOutput;
-}
-
-export interface CocktailIngredientPromise
-  extends Promise<CocktailIngredient>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  measure: () => Promise<String>;
-  cocktail: <T = CocktailPromise>() => T;
-  ingredient: <T = IngredientPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface CocktailIngredientSubscription
-  extends Promise<AsyncIterator<CocktailIngredient>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  measure: () => Promise<AsyncIterator<String>>;
-  cocktail: <T = CocktailSubscription>() => T;
-  ingredient: <T = IngredientSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface CocktailIngredientNullablePromise
-  extends Promise<CocktailIngredient | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  measure: () => Promise<String>;
-  cocktail: <T = CocktailPromise>() => T;
-  ingredient: <T = IngredientPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface UserEdge {
-  node: User;
+export interface CocktailIngredientEdge {
+  node: CocktailIngredient;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface CocktailIngredientEdgePromise
+  extends Promise<CocktailIngredientEdge>,
+    Fragmentable {
+  node: <T = CocktailIngredientPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface CocktailIngredientEdgeSubscription
+  extends Promise<AsyncIterator<CocktailIngredientEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = CocktailIngredientSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUserCocktail {
-  count: Int;
-}
-
-export interface AggregateUserCocktailPromise
-  extends Promise<AggregateUserCocktail>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserCocktailSubscription
-  extends Promise<AsyncIterator<AggregateUserCocktail>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface IngredientConnection {
-  pageInfo: PageInfo;
-  edges: IngredientEdge[];
-}
-
-export interface IngredientConnectionPromise
-  extends Promise<IngredientConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IngredientEdge>>() => T;
-  aggregate: <T = AggregateIngredientPromise>() => T;
-}
-
-export interface IngredientConnectionSubscription
-  extends Promise<AsyncIterator<IngredientConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IngredientEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIngredientSubscription>() => T;
 }
 
 export interface AggregateIngredient {
@@ -2035,6 +2165,47 @@ export interface AggregateIngredientSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface UserCocktailSubscriptionPayload {
+  mutation: MutationType;
+  node: UserCocktail;
+  updatedFields: String[];
+  previousValues: UserCocktailPreviousValues;
+}
+
+export interface UserCocktailSubscriptionPayloadPromise
+  extends Promise<UserCocktailSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserCocktailPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserCocktailPreviousValuesPromise>() => T;
+}
+
+export interface UserCocktailSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserCocktailSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserCocktailSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserCocktailPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateCocktail {
+  count: Int;
+}
+
+export interface AggregateCocktailPromise
+  extends Promise<AggregateCocktail>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCocktailSubscription
+  extends Promise<AsyncIterator<AggregateCocktail>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 /*
 DateTime scalar input type, allowing Date
 */
@@ -2048,14 +2219,10 @@ export type DateTimeOutput = string;
 export type Long = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type String = string;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -2063,10 +2230,14 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Boolean = boolean;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /**
  * Model Metadata

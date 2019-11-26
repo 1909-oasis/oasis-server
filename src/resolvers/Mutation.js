@@ -3,13 +3,9 @@ const jwt = require("jsonwebtoken");
 const { APP_SECRET, getUserId } = require("../utils");
 
 async function signup(parent, args, context, info) {
-  // 1
   const password = await bcrypt.hash(args.password, 10);
-  // 2
   const user = await context.prisma.createUser({ ...args, password });
-  // 3
   const token = jwt.sign({ userId: user.id }, APP_SECRET);
-  // 4
   return {
     token,
     user
@@ -17,33 +13,40 @@ async function signup(parent, args, context, info) {
 }
 
 async function login(parent, args, context, info) {
-  // 1
   const user = await context.prisma.user({ email: args.email });
   if (!user) {
     throw new Error("No such user found");
   }
-  // 2
   const valid = await bcrypt.compare(args.password, user.password);
   if (!valid) {
     throw new Error("Invalid password");
   }
   const token = jwt.sign({ userId: user.id }, APP_SECRET);
-  // 3
   return {
     token,
     user
   };
 }
 
-async function logout(parent, args, context, info) {
-  // const user = await context.prisma.user();
-  console.log(context);
+async function swipe(parent, args, context, info) {
+  const userId = getUserId(context);
+  const ratingExists = await context.prisma.$exists.userCocktail({
+    user: { id: userId },
+    cocktail: { id: args.cocktailId }
+  });
+  if (userId && !ratingExists) {
+    const newUserCocktail = await context.prisma.createUserCocktail({
+      user: { connect: { id: userId } },
+      cocktail: { connect: { id: args.cocktailId } },
+      rating: args.rating,
+      recommended: false
+    });
+    return newUserCocktail;
+  }
 }
-
-// logout();
 
 module.exports = {
   signup,
   login,
-  logout
+  swipe
 };
