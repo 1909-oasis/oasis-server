@@ -58,6 +58,11 @@ input CocktailCreateInput {
   ingredients: CocktailIngredientCreateManyWithoutCocktailInput
 }
 
+input CocktailCreateManyInput {
+  create: [CocktailCreateInput!]
+  connect: [CocktailWhereUniqueInput!]
+}
+
 input CocktailCreateOneInput {
   create: CocktailCreateInput
   connect: CocktailWhereUniqueInput
@@ -324,6 +329,90 @@ type CocktailPreviousValues {
   createdAt: DateTime!
 }
 
+input CocktailScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  alcoholic: Boolean
+  alcoholic_not: Boolean
+  imageUrl: String
+  imageUrl_not: String
+  imageUrl_in: [String!]
+  imageUrl_not_in: [String!]
+  imageUrl_lt: String
+  imageUrl_lte: String
+  imageUrl_gt: String
+  imageUrl_gte: String
+  imageUrl_contains: String
+  imageUrl_not_contains: String
+  imageUrl_starts_with: String
+  imageUrl_not_starts_with: String
+  imageUrl_ends_with: String
+  imageUrl_not_ends_with: String
+  starterPack: Boolean
+  starterPack_not: Boolean
+  totalRating: Int
+  totalRating_not: Int
+  totalRating_in: [Int!]
+  totalRating_not_in: [Int!]
+  totalRating_lt: Int
+  totalRating_lte: Int
+  totalRating_gt: Int
+  totalRating_gte: Int
+  totalVotes: Int
+  totalVotes_not: Int
+  totalVotes_in: [Int!]
+  totalVotes_not_in: [Int!]
+  totalVotes_lt: Int
+  totalVotes_lte: Int
+  totalVotes_gt: Int
+  totalVotes_gte: Int
+  recommendedCount: Int
+  recommendedCount_not: Int
+  recommendedCount_in: [Int!]
+  recommendedCount_not_in: [Int!]
+  recommendedCount_lt: Int
+  recommendedCount_lte: Int
+  recommendedCount_gt: Int
+  recommendedCount_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [CocktailScalarWhereInput!]
+  OR: [CocktailScalarWhereInput!]
+  NOT: [CocktailScalarWhereInput!]
+}
+
 type CocktailSubscriptionPayload {
   mutation: MutationType!
   node: Cocktail
@@ -364,6 +453,28 @@ input CocktailUpdateInput {
   ingredients: CocktailIngredientUpdateManyWithoutCocktailInput
 }
 
+input CocktailUpdateManyDataInput {
+  name: String
+  alcoholic: Boolean
+  imageUrl: String
+  starterPack: Boolean
+  totalRating: Int
+  totalVotes: Int
+  recommendedCount: Int
+}
+
+input CocktailUpdateManyInput {
+  create: [CocktailCreateInput!]
+  update: [CocktailUpdateWithWhereUniqueNestedInput!]
+  upsert: [CocktailUpsertWithWhereUniqueNestedInput!]
+  delete: [CocktailWhereUniqueInput!]
+  connect: [CocktailWhereUniqueInput!]
+  set: [CocktailWhereUniqueInput!]
+  disconnect: [CocktailWhereUniqueInput!]
+  deleteMany: [CocktailScalarWhereInput!]
+  updateMany: [CocktailUpdateManyWithWhereNestedInput!]
+}
+
 input CocktailUpdateManyMutationInput {
   name: String
   alcoholic: Boolean
@@ -372,6 +483,11 @@ input CocktailUpdateManyMutationInput {
   totalRating: Int
   totalVotes: Int
   recommendedCount: Int
+}
+
+input CocktailUpdateManyWithWhereNestedInput {
+  where: CocktailScalarWhereInput!
+  data: CocktailUpdateManyDataInput!
 }
 
 input CocktailUpdateOneRequiredInput {
@@ -398,6 +514,11 @@ input CocktailUpdateWithoutIngredientsDataInput {
   recommendedCount: Int
 }
 
+input CocktailUpdateWithWhereUniqueNestedInput {
+  where: CocktailWhereUniqueInput!
+  data: CocktailUpdateDataInput!
+}
+
 input CocktailUpsertNestedInput {
   update: CocktailUpdateDataInput!
   create: CocktailCreateInput!
@@ -406,6 +527,12 @@ input CocktailUpsertNestedInput {
 input CocktailUpsertWithoutIngredientsInput {
   update: CocktailUpdateWithoutIngredientsDataInput!
   create: CocktailCreateWithoutIngredientsInput!
+}
+
+input CocktailUpsertWithWhereUniqueNestedInput {
+  where: CocktailWhereUniqueInput!
+  update: CocktailUpdateDataInput!
+  create: CocktailCreateInput!
 }
 
 input CocktailWhereInput {
@@ -629,6 +756,7 @@ input IngredientWhereInput {
 
 input IngredientWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar Long
@@ -718,6 +846,7 @@ type User {
   email: String!
   createdAt: DateTime!
   votes(where: UserCocktailWhereInput, orderBy: UserCocktailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserCocktail!]
+  queue(where: CocktailWhereInput, orderBy: CocktailOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cocktail!]
 }
 
 type UserCocktail {
@@ -942,6 +1071,7 @@ input UserCreateInput {
   password: String!
   email: String!
   votes: UserCocktailCreateManyWithoutUserInput
+  queue: CocktailCreateManyInput
 }
 
 input UserCreateOneWithoutVotesInput {
@@ -955,6 +1085,7 @@ input UserCreateWithoutVotesInput {
   lastName: String!
   password: String!
   email: String!
+  queue: CocktailCreateManyInput
 }
 
 type UserEdge {
@@ -1010,6 +1141,7 @@ input UserUpdateInput {
   password: String
   email: String
   votes: UserCocktailUpdateManyWithoutUserInput
+  queue: CocktailUpdateManyInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1031,6 +1163,7 @@ input UserUpdateWithoutVotesDataInput {
   lastName: String
   password: String
   email: String
+  queue: CocktailUpdateManyInput
 }
 
 input UserUpsertWithoutVotesInput {
@@ -1120,6 +1253,9 @@ input UserWhereInput {
   votes_every: UserCocktailWhereInput
   votes_some: UserCocktailWhereInput
   votes_none: UserCocktailWhereInput
+  queue_every: CocktailWhereInput
+  queue_some: CocktailWhereInput
+  queue_none: CocktailWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

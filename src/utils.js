@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-require("../secrets");
+require("../secrets.js");
 const APP_SECRET = process.env.APP_SECRET;
 
 function getUserId(context) {
