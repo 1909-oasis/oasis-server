@@ -6,6 +6,7 @@ type User {
   email: String! @unique
   createdAt: DateTime! @createdAt
   votes: [UserCocktail!]!
+  queue: [Cocktail!]!
 }
 
 type UserCocktail {
@@ -40,6 +41,6 @@ type CocktailIngredient {
 
 type Ingredient {
   id: ID! @id
-  name: String!
+  name: String! @unique
   createdAt: DateTime! @createdAt
 }
