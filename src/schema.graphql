@@ -10,6 +10,7 @@ type Mutation {
     lastName: String!
   ): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  swipe(cocktailId: ID!, rating: Int!): UserCocktail!
 }
 
 type AuthPayload {

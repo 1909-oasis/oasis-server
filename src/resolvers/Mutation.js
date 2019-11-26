@@ -28,7 +28,25 @@ async function login(parent, args, context, info) {
   };
 }
 
+async function swipe(parent, args, context, info) {
+  const userId = getUserId(context);
+  const ratingExists = await context.prisma.$exists.userCocktail({
+    user: { id: userId },
+    cocktail: { id: args.cocktailId }
+  });
+  if (userId && !ratingExists) {
+    const newUserCocktail = await context.prisma.createUserCocktail({
+      user: { connect: { id: userId } },
+      cocktail: { connect: { id: args.cocktailId } },
+      rating: args.rating,
+      recommended: false
+    });
+    return newUserCocktail;
+  }
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  swipe
 };
