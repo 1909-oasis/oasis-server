@@ -3,11 +3,12 @@ const UserCocktail = require("./resolvers/UserCocktail");
 const User = require("./resolvers/User");
 const Cocktail = require("./resolvers/Cocktail");
 const CocktailIngredient = require("./resolvers/CocktailIngredient");
+const Query = require("./resolvers/Query")
 const { prisma } = require("./generated/prisma-client");
 const { GraphQLServer } = require("graphql-yoga");
 
 const resolvers = {
-  Query: { info: () => "Oasis test Query" },
+  Query,
   Mutation,
   UserCocktail,
   User,
