@@ -5,7 +5,6 @@ function info (){
 }
 
 async function me (parent, args, context, info){
-  console.log('we are in meeeeee')
   return await context.prisma.user({
     id: getUserId(context)
   })
