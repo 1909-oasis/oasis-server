@@ -11,6 +11,7 @@ async function me (parent, args, context, info){
   })
 }
 
+// returns array of starterpack cocktails if starterpack is set to true in query.
 async function cocktailStarter(parent, args, context, info) {
   console.log('we are in starter pack')
   const pack = await context.prisma.cocktails({
