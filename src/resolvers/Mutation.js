@@ -45,16 +45,22 @@ async function swipe(parent, args, context, info) {
   }
 }
 
-// async function queue(parent, args, context, info) {
-//   const userId = getUserId(context);
-//   const ratingExists = await context.prisma.$exists.userCocktail({
-//     user: { id: userId },
-//     cocktail: { id: args.cocktailId }
-//   });
-// }
+async function updateQueue(parent, args, context, info) {
+  const userId = getUserId(context)
+  const updatedUser = await context.prisma.updateUser({
+    data: {
+      queue: args.cocktailArr
+    },
+    where: {
+      id: userId
+    }
+  })
+  return updatedUser
+}
 
 module.exports = {
   signup,
   login,
-  swipe
+  swipe,
+  updateQueue
 }
