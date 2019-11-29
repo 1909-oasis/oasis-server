@@ -1,6 +1,7 @@
 type Query {
   info: String!
   me: User!
+  cocktailStarter(starterPack: Boolean!): [Cocktail!]!
 }
 
 type Mutation {
@@ -25,6 +26,7 @@ type User {
   lastName: String!
   email: String!
   votes: [UserCocktail!]!
+  queue: [Cocktail!]!
 }
 
 type UserCocktail {

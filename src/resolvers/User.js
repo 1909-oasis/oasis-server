@@ -3,9 +3,18 @@ function votes(parent, args, context) {
     .user({
       id: parent.id
     })
-    .votes();
+    .votes()
+}
+
+function queue(parent, args, context) {
+  return context.prisma
+    .user({
+      id: parent.id
+    })
+    .queue()
 }
 
 module.exports = {
-  votes
-};
+  votes,
+  queue
+}
