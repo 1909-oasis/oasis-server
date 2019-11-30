@@ -61,22 +61,42 @@ async function updateQueue(parent, args, context, info) {
   return updatedUser;
 }
 
-//will always replace the entire queue with a new one.
-//takes an array of cocktail Ids as an argument (cocktailIds)
-async function createQueue(parent, args, context, info) {
-  console.log('in addToQueue')
+//will add any new cocktails to the back of the existing Queue, not replacing them if they already exist.
+async function addToQueue(parent, args, context, info) {
   const userId = getUserId(context)
-  const cocktailIds = args.cocktailIds
+  const newCocktailIds = args.cocktailIds
+  const user = context.prisma.user({
+    id: userId
+  })
+  //this contains all of the Cocktail Objects in the current Queue
+  let currentQueue = await user.queue()
 
   //GraphQL Shenanigans:  the 'queue' field in updateUser() expects a CocktailUpdateManyInput object which has a 'connect' key.  This 'connect' key expects an array of [CocktailWhereUniqueInput!] objects, each of which can be formatted as {id: cocktailId} to connect with the right cocktail in our Cocktail table.  Soo we create an array of these CocktailWhereUniqueInput objects here!!!
-  let connectArray = cocktailIds.map((cocktailId) => {
+
+  existingCocktailsArray = currentQueue.map((cocktail) => {
+    return {id: cocktail.id}
+  })
+
+  let newCocktailsArray = newCocktailIds.map((cocktailId) => {
     return {id: cocktailId}
   })
 
-  //now we update the user with the array of {id: cocktailId} objects.
+  //here we look through every cocktail that we are adding and determine if it already exists in the Queue.  If it does, we ignore it.
+  let uniqueNewCocktails = newCocktailsArray.filter((newCocktail) => {
+    let alreadyInExistingCocktailsArray =  existingCocktailsArray.every((existingCocktail) => {
+      return existingCocktail.id !== newCocktail.id
+    })
+    return alreadyInExistingCocktailsArray
+
+  })
+
+  //Now we add the unique new cocktails our existing queue:
+  const newArr = existingCocktailsArray.concat(uniqueNewCocktails)
+
+  // //now we update the user with the array of {id: cocktailId} objects.
   const updatedUser = await context.prisma.updateUser({
     data: {
-      queue: {connect: connectArray},
+      queue: {connect: newArr},
     },
     where: {
       id: userId,
@@ -90,5 +110,5 @@ module.exports = {
   login,
   swipe,
   updateQueue,
-  createQueue
+  addToQueue
 };
