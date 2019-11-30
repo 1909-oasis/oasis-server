@@ -15,7 +15,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
   swipe(cocktailId: ID!, rating: Int!): UserCocktail!
   updateQueue(cocktailArr: [String!]!): User
-  createQueue(cocktailIds: [String]!): User
+  addToQueue(cocktailIds: [String]!): User
 }
 
 type AuthPayload {
