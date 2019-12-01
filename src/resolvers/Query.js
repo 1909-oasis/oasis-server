@@ -34,9 +34,46 @@ async function recommendationList (parent, args, context, info) {
   return list
 }
 
+async function unratedCocktails (parent, args, context, info){
+
+  const fragment = `
+  fragment UserCocktailWithCocktail on UserCocktail {
+    id
+    rating
+    cocktail {
+      id
+      name
+    }
+  }
+`;
+
+  const ratedUserCocktails = await context.prisma.userCocktails({
+    where: {
+      user: { id: getUserId(context)}
+    }
+  }).$fragment(fragment)
+  cocktailIdsToExclude = ratedUserCocktails.map((element)=>element.cocktail.id)
+
+  const unratedCocktails =  await context.prisma.cocktails({
+    where:
+    {NOT: [{
+      id_in: cocktailIdsToExclude
+    }]}
+  })
+
+  returnArr = []
+  for(let i = 0; i < 20 && i < unratedCocktails.length; i++){
+    const randomIndex = Math.floor(Math.random() * unratedCocktails.length)
+    returnArr.push(unratedCocktails[randomIndex])
+  }
+
+  return returnArr
+}
+
 module.exports = {
   info,
   me,
   cocktailStarter,
-  recommendationList
+  recommendationList,
+  unratedCocktails
 }

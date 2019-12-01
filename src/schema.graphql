@@ -3,6 +3,7 @@ type Query {
   me: User!
   cocktailStarter(starterPack: Boolean!): [Cocktail!]!
   recommendationList: [UserCocktail!]!
+  unratedCocktails: [Cocktail!]!
 }
 
 type Mutation {
@@ -14,8 +15,9 @@ type Mutation {
   ): AuthPayload
   login(email: String!, password: String!): AuthPayload
   swipe(cocktailId: ID!, rating: Int!): UserCocktail!
-  updateQueue(cocktailArr: [String!]!): User
-  addToQueue(cocktailIds: [String]!): User
+  updateQueue(cocktailArr: [String!]!): User!
+  addToQueue(cocktailIds: [String]!): User!
+  initializeQueue: User!
 }
 
 type AuthPayload {
