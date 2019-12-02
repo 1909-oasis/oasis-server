@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {queue} = require('./User')
+const { unratedCocktails } = require('./Query')
 const { APP_SECRET, getUserId } = require("../utils");
 
 async function signup(parent, args, context, info) {
@@ -46,19 +46,15 @@ async function swipe(parent, args, context, info) {
   }
 }
 
-async function updateQueue(parent, args, context, info) {
-  console.log('in updateQueue')
-  const userId = getUserId(context);
 
-  const updatedUser = await context.prisma.updateUser({
-    data: {
-      queue: args.cocktailArr,
-    },
-    where: {
-      id: userId,
-    },
-  });
-  return updatedUser;
+//gets 20 random unrated cocktails and adds them to the queue.
+async function updateQueue(parent, args, context, info) {
+
+  let cocktailsToAdd = await unratedCocktails(parent, args, context, info)
+  let cocktailIdsToAdd = cocktailsToAdd.map((cocktail) => cocktail.id)
+  let newArgs = {...args, cocktailIds: cocktailIdsToAdd}
+  return addToQueue(parent, newArgs, context, info)
+
 }
 
 //will add any new cocktails to the back of the existing Queue, not replacing them if they already exist.
@@ -104,6 +100,8 @@ async function addToQueue(parent, args, context, info) {
   });
   return updatedUser;
 }
+
+
 
 module.exports = {
   signup,
