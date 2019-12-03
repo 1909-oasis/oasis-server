@@ -82,6 +82,58 @@ async function unratedCocktails(parent, args, context, info) {
   return returnArr;
 }
 
+async function findAllUserCocktailIDs(parent, args, context, info) {
+  const userCocktails = await context.prisma.userCocktails({
+    where: {
+      user: { id: getUserId(context) },
+    },
+  });
+
+  return userCocktails;
+
+  // console.log(
+  //   "this is our userCocktails in findAllUserCocktailIDs",
+  //   userCocktails
+  // );
+  // let userCocktailIds = userCocktails.map(
+  //   userCocktail => userCocktail.cocktail
+  // );
+  // return userCocktailIds;
+}
+
+async function usersWhoAlsoRatedCocktail(
+  parent,
+  args,
+  context,
+  info
+) {
+  let userCocktails = await findAllUserCocktailIDs(
+    parent,
+    args,
+    context,
+    info
+  );
+
+  let userCocktailObj = {};
+
+  console.log(
+    `this is our array of cocktails rated for the logged in user:`,
+    userCocktails
+  );
+
+  // userCocktailIds.forEach(async (cocktailId, i) => {
+  //   // console.log(`cocktail at ${i}`, cocktailId);
+  //   let userCocktails = await context.prisma.userCocktails({
+  //     where: {
+  //       cocktail: { id: cocktailId },
+  //     },
+  //   });
+  //   // console.log(`userCocktails at ${i}`, userCocktails);
+  // });
+
+  return 0;
+}
+
 module.exports = {
   info,
   me,
@@ -89,4 +141,6 @@ module.exports = {
   cocktailStarter,
   recommendationList,
   unratedCocktails,
+  findAllUserCocktailIDs,
+  usersWhoAlsoRatedCocktail,
 };
