@@ -82,6 +82,9 @@ async function unratedCocktails(parent, args, context, info) {
   return returnArr;
 }
 
+// global variables
+let loggedInUserRatingMap = {};
+
 // find all other cocktails that the logged in user has rated => returns array of all cocktails that the logged in user has rated
 async function findAllUserCocktailIDs(parent, args, context, info) {
   const fragment = `
@@ -105,39 +108,76 @@ async function findAllUserCocktailIDs(parent, args, context, info) {
     })
     .$fragment(fragment);
 
-  let userCocktailIds = userCocktails.map(
-    userCocktail => userCocktail.cocktail.id
-  );
-  return userCocktailIds;
+  userCocktails.forEach(userCocktail => {
+    loggedInUserRatingMap[userCocktail.cocktail.id] =
+      userCocktail.rating;
+  });
+
+  return Object.keys(loggedInUserRatingMap);
 }
 
+// for each cocktail that the logged in user has rated, we are finding all other users that have also rated that cocktail and including their rating.
 async function usersWhoAlsoRatedCocktail(
   parent,
   args,
   context,
   info
 ) {
-  let userCocktails = await findAllUserCocktailIDs(
+  const fragment = `
+  fragment UserCocktailwCocktailUser on UserCocktail {
+    id
+    rating
+    cocktail {
+      id
+    }
+    user {
+      id
+    }
+  }
+`;
+
+  let userCocktailIds = await findAllUserCocktailIDs(
     parent,
     args,
     context,
     info
   );
 
-  let userCocktailObj = {};
+  const mapOfUserIDs = [];
+  const scoreSystem = [];
 
-  // userCocktailIds.forEach(async (cocktailId, i) => {
-  //   // console.log(`cocktail at ${i}`, cocktailId);
-  //   let userCocktails = await context.prisma.userCocktails({
-  //     where: {
-  //       cocktail: { id: cocktailId },
-  //     },
-  //   });
-  //   // console.log(`userCocktails at ${i}`, userCocktails);
-  // });
+  userCocktailIds.forEach(async (cocktailId, i) => {
+    let userCocktails = await context.prisma
+      .userCocktails({
+        where: {
+          cocktail: { id: cocktailId },
+        },
+      })
+      .$fragment(fragment);
+    // console.log(`this is userCocktails`, userCocktails);
+
+    userCocktails.forEach(userRating => {
+      if (userRating.user.id !== getUserId(context)) {
+        if (mapOfUserIDs.indexOf(userRating.user.id) === -1) {
+          mapOfUserIDs.push(userRating.user.id);
+          scoreSystem.push(0);
+        }
+        let index = mapOfUserIDs.indexOf(userRating.user.id);
+        if (loggedInUserRatingMap[cocktailId] === userRating.rating) {
+          scoreSystem[index]++;
+        } else {
+          scoreSystem[index]--;
+        }
+      }
+    });
+    console.log(`userid map`, mapOfUserIDs);
+    console.log(`scores`, scoreSystem);
+  });
 
   return 0;
 }
+
+function comparisonFunc(userRating) {}
 
 module.exports = {
   info,
