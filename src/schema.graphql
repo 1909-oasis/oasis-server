@@ -6,7 +6,7 @@ type Query {
   unratedCocktails: [Cocktail!]!
   dan: User!
   findAllUserCocktailIDs: [String!]!
-  usersWhoAlsoRatedCocktail: Int!
+  getRecommendation: Cocktail!
 }
 
 type Mutation {

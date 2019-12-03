@@ -117,12 +117,7 @@ async function findAllUserCocktailIDs(parent, args, context, info) {
 }
 
 // for each cocktail that the logged in user has rated, we are finding all other users that have also rated that cocktail and including their rating.
-async function usersWhoAlsoRatedCocktail(
-  parent,
-  args,
-  context,
-  info
-) {
+async function getRecommendation(parent, args, context, info) {
   const fragment = `
   fragment UserCocktailwCocktailUser on UserCocktail {
     id
@@ -146,7 +141,8 @@ async function usersWhoAlsoRatedCocktail(
   const mapOfUserIDs = [];
   const scoreSystem = [];
 
-  userCocktailIds.forEach(async (cocktailId, i) => {
+  for (let i = 0; i < userCocktailIds.length; i++) {
+    let cocktailId = userCocktailIds[i];
     let userCocktails = await context.prisma
       .userCocktails({
         where: {
@@ -154,7 +150,6 @@ async function usersWhoAlsoRatedCocktail(
         },
       })
       .$fragment(fragment);
-    // console.log(`this is userCocktails`, userCocktails);
 
     userCocktails.forEach(userRating => {
       if (userRating.user.id !== getUserId(context)) {
@@ -170,14 +165,53 @@ async function usersWhoAlsoRatedCocktail(
         }
       }
     });
-    console.log(`userid map`, mapOfUserIDs);
-    console.log(`scores`, scoreSystem);
+  }
+
+  let max = Math.max(...scoreSystem);
+  let maxIdx = scoreSystem.indexOf(max);
+  let userIdofMax = mapOfUserIDs[maxIdx];
+
+  const fragment2 = `
+  fragment UserCocktailofCompUser on UserCocktail {
+    id
+    rating
+    cocktail {
+      id
+    }
+  }
+`;
+
+  let compareUserCocktails = await context.prisma
+    .userCocktails({
+      where: {
+        user: { id: userIdofMax },
+        rating: 1,
+      },
+    })
+    .$fragment(fragment2);
+
+  let compareUserCocktailIDS = compareUserCocktails
+    .map(userCocktail => userCocktail.cocktail.id)
+    .filter(cocktailID => !loggedInUserRatingMap[cocktailID]);
+
+  let cocktails = await context.prisma.cocktails({
+    where: {
+      id_in: compareUserCocktailIDS,
+    },
   });
 
-  return 0;
-}
+  let highestRating = 0;
+  let highestRatedCocktail;
 
-function comparisonFunc(userRating) {}
+  cocktails.forEach(cocktail => {
+    if (cocktail.totalRating > highestRating) {
+      highestRating = cocktail.totalRating;
+      highestRatedCocktail = cocktail;
+    }
+  });
+
+  return highestRatedCocktail;
+}
 
 module.exports = {
   info,
@@ -187,5 +221,5 @@ module.exports = {
   recommendationList,
   unratedCocktails,
   findAllUserCocktailIDs,
-  usersWhoAlsoRatedCocktail,
+  getRecommendation,
 };
