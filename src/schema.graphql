@@ -5,7 +5,7 @@ type Query {
   recommendationList: [UserCocktail!]!
   unratedCocktails: [Cocktail!]!
   dan: User!
-  findAllUserCocktailIDs: [UserCocktail!]!
+  findAllUserCocktailIDs: [String!]!
   usersWhoAlsoRatedCocktail: Int!
 }
 

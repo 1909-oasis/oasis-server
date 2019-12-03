@@ -82,23 +82,33 @@ async function unratedCocktails(parent, args, context, info) {
   return returnArr;
 }
 
+// find all other cocktails that the logged in user has rated => returns array of all cocktails that the logged in user has rated
 async function findAllUserCocktailIDs(parent, args, context, info) {
-  const userCocktails = await context.prisma.userCocktails({
-    where: {
-      user: { id: getUserId(context) },
-    },
-  });
+  const fragment = `
+  fragment UserCocktailwCocktailUser on UserCocktail {
+    id
+    rating
+    cocktail {
+      id
+    }
+    user {
+      id
+    }
+  }
+`;
 
-  return userCocktails;
+  const userCocktails = await context.prisma
+    .userCocktails({
+      where: {
+        user: { id: getUserId(context) },
+      },
+    })
+    .$fragment(fragment);
 
-  // console.log(
-  //   "this is our userCocktails in findAllUserCocktailIDs",
-  //   userCocktails
-  // );
-  // let userCocktailIds = userCocktails.map(
-  //   userCocktail => userCocktail.cocktail
-  // );
-  // return userCocktailIds;
+  let userCocktailIds = userCocktails.map(
+    userCocktail => userCocktail.cocktail.id
+  );
+  return userCocktailIds;
 }
 
 async function usersWhoAlsoRatedCocktail(
@@ -115,11 +125,6 @@ async function usersWhoAlsoRatedCocktail(
   );
 
   let userCocktailObj = {};
-
-  console.log(
-    `this is our array of cocktails rated for the logged in user:`,
-    userCocktails
-  );
 
   // userCocktailIds.forEach(async (cocktailId, i) => {
   //   // console.log(`cocktail at ${i}`, cocktailId);
