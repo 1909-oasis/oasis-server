@@ -19,6 +19,7 @@ type Mutation {
   updateQueue: User!
   addToQueue(cocktailIds: [String]!): User!
   initializeQueue: User!
+  shiftFromQueue: User!
 }
 
 type AuthPayload {

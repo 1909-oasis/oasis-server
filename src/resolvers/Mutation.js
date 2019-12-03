@@ -58,6 +58,7 @@ async function swipe(parent, args, context, info) {
         id: args.cocktailId,
       },
     });
+    await shiftFromQueue(parent, args, context, info)
     return newUserCocktail;
   }
 }
@@ -79,7 +80,7 @@ async function updateQueue(parent, args, context, info) {
 async function addToQueue(parent, args, context, info) {
   const userId = getUserId(context);
   const newCocktailIds = args.cocktailIds;
-  const user = context.prisma.user({
+  const user =  context.prisma.user({
     id: userId,
   });
   //this contains all of the Cocktail Objects in the current Queue
@@ -120,10 +121,30 @@ async function addToQueue(parent, args, context, info) {
   return updatedUser;
 }
 
+async function shiftFromQueue(parent, args, context, info) {
+  const userId = getUserId(context);
+  const user =  context.prisma.user({
+    id: userId,
+  });
+  let currentQueue = await user.queue();
+
+  const updatedUser = await context.prisma.updateUser({
+    data: {
+      queue: { disconnect: {id: currentQueue[0].id}}
+    },
+    where: {
+      id: userId,
+    }
+  });
+  return updatedUser;
+
+}
+
 module.exports = {
   signup,
   login,
   swipe,
   updateQueue,
   addToQueue,
+  shiftFromQueue
 };
