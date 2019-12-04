@@ -5,9 +5,13 @@ function info() {
 }
 
 async function me(parent, args, context, info) {
-  return await context.prisma.user({
-    id: getUserId(context),
+  const id = getUserId(context)
+  console.log('id: ', id)
+  const user = await context.prisma.user({
+    id: id,
   });
+  console.log('in me! user: ', user)
+  return user;
 }
 
 async function dan(parent, args, context, info) {
