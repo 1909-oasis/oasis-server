@@ -22,6 +22,7 @@ async function dan(parent, args, context, info) {
 
 // returns array of starterpack cocktails if starterpack is set to true in query.
 async function cocktailStarter(parent, args, context, info) {
+  console.log("starterPack ---->");
   const pack = await context.prisma.cocktails({
     where: {
       starterPack: true,
@@ -134,7 +135,7 @@ async function getRecommendation(parent, args, context, info) {
     }
   }
 `;
-
+  console.log("am i hitting this ----> 1");
   let userCocktailIds = await findAllUserCocktailIDs(
     parent,
     args,
@@ -145,6 +146,7 @@ async function getRecommendation(parent, args, context, info) {
   const mapOfUserIDs = [];
   const scoreSystem = [];
 
+  console.log("am i hitting this ----> 2");
   for (let i = 0; i < userCocktailIds.length; i++) {
     let cocktailId = userCocktailIds[i];
     let userCocktails = await context.prisma
@@ -154,7 +156,7 @@ async function getRecommendation(parent, args, context, info) {
         },
       })
       .$fragment(fragment);
-
+    console.log("am i hitting this ----> 3");
     userCocktails.forEach(userRating => {
       if (userRating.user.id !== getUserId(context)) {
         if (mapOfUserIDs.indexOf(userRating.user.id) === -1) {
@@ -170,7 +172,7 @@ async function getRecommendation(parent, args, context, info) {
       }
     });
   }
-
+  console.log("am i hitting this ----> 4");
   let max = Math.max(...scoreSystem);
   let maxIdx = scoreSystem.indexOf(max);
   let userIdofMax = mapOfUserIDs[maxIdx];
@@ -184,7 +186,7 @@ async function getRecommendation(parent, args, context, info) {
     }
   }
 `;
-
+  console.log("am i hitting this ----> 5");
   let compareUserCocktails = await context.prisma
     .userCocktails({
       where: {
@@ -193,7 +195,7 @@ async function getRecommendation(parent, args, context, info) {
       },
     })
     .$fragment(fragment2);
-
+  console.log("am i hitting this ----> 6");
   let compareUserCocktailIDS = compareUserCocktails
     .map(userCocktail => userCocktail.cocktail.id)
     .filter(cocktailID => !loggedInUserRatingMap[cocktailID]);
@@ -206,14 +208,14 @@ async function getRecommendation(parent, args, context, info) {
 
   let highestRating = 0;
   let highestRatedCocktail;
-
+  console.log("am i hitting this ----> 7");
   cocktails.forEach(cocktail => {
     if (cocktail.totalRating > highestRating) {
       highestRating = cocktail.totalRating;
       highestRatedCocktail = cocktail;
     }
   });
-
+  console.log("am i hitting this ----> 8");
   return highestRatedCocktail;
 }
 
