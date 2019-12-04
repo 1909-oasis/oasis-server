@@ -20,7 +20,7 @@ async function dan(parent, args, context, info) {
 async function cocktailStarter(parent, args, context, info) {
   const pack = await context.prisma.cocktails({
     where: {
-      starterPack: args.starterPack,
+      starterPack: true,
     },
   });
 

@@ -1,11 +1,16 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { unratedCocktails } = require("./Query");
+const { unratedCocktails, cocktailStarter } = require("./Query");
 const { APP_SECRET, getUserId } = require("../utils");
 
 async function signup(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.createUser({ ...args, password });
+
+  const newArgs = {...args, user: user}
+  await initializeQueue(parent, newArgs, context, info)
+
+
   const token = jwt.sign({ userId: user.id }, APP_SECRET);
   return {
     token,
@@ -30,6 +35,7 @@ async function login(parent, args, context, info) {
 }
 
 async function swipe(parent, args, context, info) {
+  console.log('in swipe')
   const userId = getUserId(context);
   const ratingExists = await context.prisma.$exists.userCocktail({
     user: { id: userId },
@@ -65,6 +71,7 @@ async function swipe(parent, args, context, info) {
 
 //gets 20 random unrated cocktails and adds them to the queue.
 async function updateQueue(parent, args, context, info) {
+  const userId = getUserId(context);
   let cocktailsToAdd = await unratedCocktails(
     parent,
     args,
@@ -72,13 +79,21 @@ async function updateQueue(parent, args, context, info) {
     info
   );
   let cocktailIdsToAdd = cocktailsToAdd.map(cocktail => cocktail.id);
-  let newArgs = { ...args, cocktailIds: cocktailIdsToAdd };
+  let newArgs = { ...args, cocktailIds: cocktailIdsToAdd, userId: userId };
   return addToQueue(parent, newArgs, context, info);
+}
+
+async function initializeQueue(parent,args,context,info){
+  const pack = await cocktailStarter(parent, args, context, info);
+  const userId = args.user.id
+  let cocktailIdsToAdd = pack.map(cocktail => cocktail.id);
+  const newArgs = { ...args, cocktailIds: cocktailIdsToAdd, userId: userId}
+  return addToQueue(parent, newArgs, context, info)
 }
 
 //will add any new cocktails to the back of the existing Queue, not replacing them if they already exist.
 async function addToQueue(parent, args, context, info) {
-  const userId = getUserId(context);
+  const userId = args.userId;
   const newCocktailIds = args.cocktailIds;
   const user =  context.prisma.user({
     id: userId,
@@ -145,6 +160,7 @@ module.exports = {
   login,
   swipe,
   updateQueue,
+  initializeQueue,
   addToQueue,
   shiftFromQueue
 };
