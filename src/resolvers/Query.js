@@ -5,12 +5,12 @@ function info() {
 }
 
 async function me(parent, args, context, info) {
-  const id = getUserId(context)
-  console.log('id: ', id)
+  const id = getUserId(context);
+  console.log("id: ", id);
   const user = await context.prisma.user({
     id: id,
   });
-  console.log('in me! user: ', user)
+  console.log("in me! user: ", user);
   return user;
 }
 
@@ -146,7 +146,7 @@ async function getRecommendation(parent, args, context, info) {
   const mapOfUserIDs = [];
   const scoreSystem = [];
 
-  console.log("am i hitting this ----> 2");
+  console.log("user cocktail IDs ----> 2", userCocktailIds);
   for (let i = 0; i < userCocktailIds.length; i++) {
     let cocktailId = userCocktailIds[i];
     let userCocktails = await context.prisma
@@ -156,7 +156,10 @@ async function getRecommendation(parent, args, context, info) {
         },
       })
       .$fragment(fragment);
-    console.log("am i hitting this ----> 3");
+    console.log(
+      "auser cocktails before forEach ----> 3",
+      userCocktails
+    );
     userCocktails.forEach(userRating => {
       if (userRating.user.id !== getUserId(context)) {
         if (mapOfUserIDs.indexOf(userRating.user.id) === -1) {
@@ -172,12 +175,13 @@ async function getRecommendation(parent, args, context, info) {
       }
     });
   }
-  console.log("am i hitting this ----> 4");
+  console.log("map iof user IDs ----> 4", mapOfUserIDs);
+  console.log("score system ----> 5", scoreSystem);
   let max = Math.max(...scoreSystem);
   let maxIdx = scoreSystem.indexOf(max);
   let userIdofMax = mapOfUserIDs[maxIdx];
 
-  const fragment2 = `
+  const fragment2 = ` 
   fragment UserCocktailofCompUser on UserCocktail {
     id
     rating
@@ -186,7 +190,9 @@ async function getRecommendation(parent, args, context, info) {
     }
   }
 `;
-  console.log("am i hitting this ----> 5");
+  console.log("find max score ----> 6", max);
+  console.log("find maxIdx ----> 7", maxIdx);
+  console.log("find userIdOfMax ----> 8", userIdofMax);
   let compareUserCocktails = await context.prisma
     .userCocktails({
       where: {
@@ -195,8 +201,12 @@ async function getRecommendation(parent, args, context, info) {
       },
     })
     .$fragment(fragment2);
-  console.log("am i hitting this ----> 6");
+  console.log("compare user cocktails ----> 9", compareUserCocktails);
   let compareUserCocktailIDS = compareUserCocktails
+  console.log(
+    "comaring user cocktails IDs after assigntment  ----> 10",
+    compareUserCocktailIDS
+  );
     .map(userCocktail => userCocktail.cocktail.id)
     .filter(cocktailID => !loggedInUserRatingMap[cocktailID]);
 
@@ -205,17 +215,29 @@ async function getRecommendation(parent, args, context, info) {
       id_in: compareUserCocktailIDS,
     },
   });
-
+  console.log(
+    "comaring user cocktails IDs  ----> 10",
+    compareUserCocktailIDS
+  );
   let highestRating = 0;
   let highestRatedCocktail;
-  console.log("am i hitting this ----> 7");
+
+  console.log("highest rating ----> 11", highestRating);
+
+  console.log(
+    "highest rated cocktail ----> 12",
+    highestRatedCocktail
+  );
+
+  console.log("cocktails to compare ----> 13", cocktails);
+
   cocktails.forEach(cocktail => {
     if (cocktail.totalRating > highestRating) {
       highestRating = cocktail.totalRating;
       highestRatedCocktail = cocktail;
     }
   });
-  console.log("am i hitting this ----> 8");
+  console.log("recommended cocktail ----> 14", highestRatedCocktail);
   return highestRatedCocktail;
 }
 
