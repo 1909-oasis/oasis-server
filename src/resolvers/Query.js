@@ -22,7 +22,6 @@ async function dan(parent, args, context, info) {
 
 // returns array of starterpack cocktails if starterpack is set to true in query.
 async function cocktailStarter(parent, args, context, info) {
-  console.log("starterPack ---->");
   const pack = await context.prisma.cocktails({
     where: {
       starterPack: true,
@@ -135,18 +134,25 @@ async function getRecommendation(parent, args, context, info) {
     }
   }
 `;
-  console.log("am i hitting this ----> 1");
+
   let userCocktailIds = await findAllUserCocktailIDs(
     parent,
     args,
     context,
     info
   );
+  console.log(
+    `all cocktails that logged in user has rated ------`,
+    userCocktailIds
+  );
 
   const mapOfUserIDs = [];
   const scoreSystem = [];
 
+<<<<<<< HEAD
   console.log("user cocktail IDs ----> 2", userCocktailIds);
+=======
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
   for (let i = 0; i < userCocktailIds.length; i++) {
     let cocktailId = userCocktailIds[i];
     let userCocktails = await context.prisma
@@ -157,7 +163,11 @@ async function getRecommendation(parent, args, context, info) {
       })
       .$fragment(fragment);
     console.log(
+<<<<<<< HEAD
       "auser cocktails before forEach ----> 3",
+=======
+      `all users that have rated ${cocktailId} cocktail ------`,
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
       userCocktails
     );
     userCocktails.forEach(userRating => {
@@ -174,14 +184,32 @@ async function getRecommendation(parent, args, context, info) {
         }
       }
     });
+    console.log(`this is the map of user ids -----`, mapOfUserIDs);
+    console.log(
+      `this is the score for each similar user -------`,
+      scoreSystem
+    );
   }
+<<<<<<< HEAD
   console.log("map iof user IDs ----> 4", mapOfUserIDs);
   console.log("score system ----> 5", scoreSystem);
+=======
+
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
   let max = Math.max(...scoreSystem);
   let maxIdx = scoreSystem.indexOf(max);
   let userIdofMax = mapOfUserIDs[maxIdx];
 
+<<<<<<< HEAD
   const fragment2 = ` 
+=======
+  console.log(
+    `this is the user that we are comparing our logged in user to --------`,
+    userIdofMax
+  );
+
+  const fragment2 = `
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
   fragment UserCocktailofCompUser on UserCocktail {
     id
     rating
@@ -190,9 +218,13 @@ async function getRecommendation(parent, args, context, info) {
     }
   }
 `;
+<<<<<<< HEAD
   console.log("find max score ----> 6", max);
   console.log("find maxIdx ----> 7", maxIdx);
   console.log("find userIdOfMax ----> 8", userIdofMax);
+=======
+
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
   let compareUserCocktails = await context.prisma
     .userCocktails({
       where: {
@@ -201,7 +233,14 @@ async function getRecommendation(parent, args, context, info) {
       },
     })
     .$fragment(fragment2);
+<<<<<<< HEAD
   console.log("compare user cocktails ----> 9", compareUserCocktails);
+=======
+  console.log(
+    `these are all of the cocktails that our compared user has LIKED----`,
+    compareUserCocktails
+  );
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
   let compareUserCocktailIDS = compareUserCocktails
   console.log(
     "comaring user cocktails IDs after assigntment  ----> 10",
@@ -210,6 +249,7 @@ async function getRecommendation(parent, args, context, info) {
     .map(userCocktail => userCocktail.cocktail.id)
     .filter(cocktailID => !loggedInUserRatingMap[cocktailID]);
 
+<<<<<<< HEAD
   let cocktails = await context.prisma.cocktails({
     where: {
       id_in: compareUserCocktailIDS,
@@ -239,6 +279,50 @@ async function getRecommendation(parent, args, context, info) {
   });
   console.log("recommended cocktail ----> 14", highestRatedCocktail);
   return highestRatedCocktail;
+=======
+  console.log(
+    `these are the cocktails that our compared user has liked and our logged in user has not rated yet ------`,
+    compareUserCocktailIDS
+  );
+
+  if (compareUserCocktailIDS.length === 0) {
+    let highestRatedCocktailOverall = await context.prisma.cocktails({
+      orderBy: "totalRating_DESC",
+      first: 1,
+    });
+    console.log(
+      `highest rated cocktail in conditional statement`,
+      highestRatedCocktailOverall
+    );
+    return highestRatedCocktailOverall[0];
+  } else {
+    let cocktails = await context.prisma.cocktails({
+      where: {
+        id_in: compareUserCocktailIDS,
+      },
+    });
+
+    console.log(
+      `these are the cocktail details of our comparison cocktail winners----`,
+      cocktails
+    );
+
+    let highestRating = 0;
+    let highestRatedCocktail;
+
+    cocktails.forEach(cocktail => {
+      if (cocktail.totalRating > highestRating) {
+        highestRating = cocktail.totalRating;
+        highestRatedCocktail = cocktail;
+      }
+    });
+    console.log(
+      "this is our highest rated cocktail------",
+      highestRatedCocktail
+    );
+    return highestRatedCocktail;
+  }
+>>>>>>> 65561e970b8ad25e438010f28433bacf331e9242
 }
 
 module.exports = {
